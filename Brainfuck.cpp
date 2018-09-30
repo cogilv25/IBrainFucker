@@ -10,7 +10,7 @@ Brainfuck::Brainfuck(unsigned int size)
 	_memory = new char[_size];
 	//Clear memory
 	memset(_memory,0,_size);
-	_position = 0;
+	_position = _memory;
 }
 
 void Brainfuck::run(const char *prog)
@@ -23,22 +23,22 @@ void Brainfuck::run(const char *prog)
 		switch(*prog)
 		{
 			case '+': 
-				++*_memory;
+				++*_position;
 				break;
 			case '-': 
-				--*_memory;
+				--*_position;
 				break;
 			case '<': 
-				--_memory;
+				--_position;
 				break;
 			case '>': 
-				++_memory;
+				++_position;
 				break;
 			case '[': 
 				bfStack.push(prog);
 				break;
 			case ']': 
-				if(*_memory==0) bfStack.pop(); else prog = bfStack.top(); 
+				if(*_position==0) bfStack.pop(); else prog = bfStack.top(); 
 				break;
 		}
 
