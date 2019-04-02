@@ -20,7 +20,7 @@ public:
 	inline char* operator[](unsigned int index) { assert(index < _size); return _memory + index; }
 
 	inline void setPosition(unsigned int index) { assert(index < _size); _position = _memory + index; }
-	inline void clearMemory(char value = 0) { memset(_memory, value, _size); }
+	inline void clearMemory(char value = 0) { memset(_memory, value, _size); _position = _memory; }
 
 public:
 	void run(const char * code);
