@@ -4,6 +4,7 @@
 
 Brainfuck::Brainfuck(unsigned int size)
 {
+	//Somewhat arbitrary limit but I felt one was neccessary
 	assert(size < 8192);
 	_size = size;
 	

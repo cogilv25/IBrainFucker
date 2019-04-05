@@ -14,13 +14,13 @@ public:
 	Brainfuck(unsigned int size = 100);
 	~Brainfuck(){}
 
-	inline void operator()(){ run(_memory); }
-	inline void operator++(){ _position++; }
-	inline void operator--(){ _position--; }
-	inline char* operator[](unsigned int index) { assert(index < _size); return _memory + index; }
+	void operator()(){ run(_memory); }
+	void operator++(){ _position++; }
+	void operator--(){ _position--; }
+	char* operator[](unsigned int index) { assert(index < _size); return _memory + index; }
 
-	inline void setPosition(unsigned int index) { assert(index < _size); _position = _memory + index; }
-	inline void clearMemory(char value = 0) { memset(_memory, value, _size); _position = _memory; }
+	void setPosition(unsigned int index) { assert(index < _size); _position = _memory + index; }
+	void clearMemory(char value = 0) { memset(_memory, value, _size); _position = _memory; }
 
 public:
 	void run(const char * code);

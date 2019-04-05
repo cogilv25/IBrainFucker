@@ -8,7 +8,6 @@ void Console::write(int x, int y, const char * str)
 	memcpy(&rawCharBuffer[y][x], str, i);
 }
 
-#ifdef _WIN32
 
 void Console::swapBuffers()
 {
@@ -28,6 +27,37 @@ void Console::clearBuffer(char c)
 			rawCharBuffer[y][x] = c;
 }
 
+int Console::getKeyState(int vKeyCode)
+{
+	short k = GetAsyncKeyState(vKeyCode);
+	//Most significant bit is 1 when key pressed
+	if ((keyStates[vKeyCode] ^ k) & 0x8000)
+	{
+		keyStates[vKeyCode] = k;
+		if (k & 0x8000)
+		{
+			//Pressed this frame
+			return 1;
+		}
+		else
+		{
+			//Released this frame
+			return 0;
+		}
+	}
+	else if (k & 0x8000)
+	{
+		//Held from previous frame
+		keyStates[vKeyCode] = k;
+		return 2;
+	}
+
+	//No input / released on a previous frame
+	keyStates[vKeyCode] = k;
+	return -1;
+}
+
+
 void Console::drawRect(int x, int y, int w, int h, short colour)
 {
 	for (int i = x; i < x + w; i++)
@@ -42,8 +72,15 @@ void Console::drawRect(int x, int y, int w, int h, short colour)
 
 Console::Console()
 {
+	memset(keyStates, 0, 256 * sizeof(short));
 	HWND wHWND = GetConsoleWindow();
 	hOut = (HANDLE)GetStdHandle(STD_OUTPUT_HANDLE);
+
+	CONSOLE_CURSOR_INFO     cursorInfo;
+
+	GetConsoleCursorInfo(hOut, &cursorInfo);
+	cursorInfo.bVisible = false; // set the cursor visibility
+	SetConsoleCursorInfo(hOut, &cursorInfo);
 
 	SetConsoleScreenBufferSize(hOut, *(COORD*)bufferSize);
 
@@ -63,10 +100,3 @@ Console::Console()
 	WriteConsoleOutput(hOut, (CHAR_INFO *)consolebuffer, *(COORD*)bufferSize, *(COORD*)bufferCoord, (SMALL_RECT*)rcRegion);
 
 }
-
-
-Console::~Console()
-{
-}
-
-#endif
