@@ -12,7 +12,7 @@ public:
 	HANDLE hOut;
 	HWND hWnd;
 #endif
-	short bufferSize[2]{160,50};
+	short bufferSize[2]{100,50};
 	char rawCharBuffer[50][160];
 	short bufferCoord[2]{ 0,0 };
 	short inputPos[2]{0,49};
