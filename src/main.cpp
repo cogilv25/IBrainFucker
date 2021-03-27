@@ -13,18 +13,14 @@
 		system("title Brainfuck Console");
 		Console console;
 
-		//Random Blue Line
-		console.drawRect(0, 0, 160, 1, 9);
-
 		
-		char inputBuffer[160] = ">++++[->++++>++++++>+++++++>+++++++>+++++++<<<<<]>+[-<++++>]<->>[-<++++>]<+>>-[-<++++>]>+[-<++++>]<+>>-[-<++++>]<+";
+		char inputBuffer[200] = ">++++[->++++>++++++>+++++++>+++++++>+++++++<<<<<]>+[-<++++>]<->>[-<++++>]<+>>-[-<++++>]>+[-<++++>]<+>>-[-<++++>]<+";
 		
 		Brainfuck bf;
 
 
 		while (true)
 		{
-			console.drawRect(0, 0, 160, 1, 9);
 			console.write(0, 1, "Running Program:");
 			console.write(0, 2, inputBuffer);
 

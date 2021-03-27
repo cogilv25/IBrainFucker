@@ -1,4 +1,4 @@
-#include "Console.h"
+﻿#include "Console.h"
 #include <cwchar>
 
 void Console::write(int x, int y, const char * str)
@@ -13,7 +13,7 @@ void Console::write(int x, int y, const char * str)
 void Console::swapBuffers()
 {
 	SetConsoleCursorPosition(hOut, *(COORD*)inputPos);
-	for (int x = 0; x < 160; x++)
+	for (int x = 0; x < 100; x++)
 		for (int y = 0; y < 50; y++)
 		{
 			consolebuffer[y][x].Char.AsciiChar = rawCharBuffer[y][x];
@@ -34,6 +34,8 @@ void Console::drawRect(int x, int y, int w, int h, short colour)
 	{
 		for (int j = y; j < y + h; j++)
 		{
+			//doesn't behave on comp at work..? 
+			// 219 = █ but displaying U with 2 dots
 			consolebuffer[j][i].Attributes = colour;
 			rawCharBuffer[j][i] = 219;
 		}
@@ -47,10 +49,10 @@ Console::Console()
 
 	SetConsoleScreenBufferSize(hOut, *(COORD*)bufferSize);
 
-	MoveWindow(wHWND, 450, 200, 1700, 2000, TRUE);
+	MoveWindow(wHWND, 100, 100, 1000, 850, TRUE);
 
 	//Clear console buffer
-	for (int x = 0; x < 160; x++)
+	for (int x = 0; x < 100; x++)
 		for (int y = 0; y < 50; y++)
 		{
 			consolebuffer[y][x].Attributes = consoleColour;
